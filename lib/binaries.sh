@@ -18,7 +18,7 @@ install_nodejs() {
 
   echo "Downloading and installing node $version..."
   local versionfolder=$(echo $version| cut -d'.' -f 1,2)
-  local download_url="https://deb.nodesource.com/node_$versionfolder/pool/main/n/nodejs/nodejs_$version-1nodesource1~trusty1_armhf.deb
+  local download_url="https://deb.nodesource.com/node_$versionfolder/pool/main/n/nodejs/nodejs_$version-1nodesource1~trusty1_armhf.deb"
   curl "$download_url" --silent --fail  --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download node $version; does it exist?" && false)
   rm -rf /tmp/node
   mkdir /tmp/node
@@ -40,7 +40,7 @@ install_iojs() {
 
   echo "Downloading and installing iojs $version..."
   local versionfolder=$(echo $version| cut -d'.' -f 1)
-  local download_url="https://deb.nodesource.com/iojs_$versionfolder.x/pool/main/i/iojs/iojs_$version-1nodesource1~trusty1_armhf.deb
+  local download_url="https://deb.nodesource.com/iojs_$versionfolder.x/pool/main/i/iojs/iojs_$version-1nodesource1~trusty1_armhf.deb"
   curl "$download_url" --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download iojs $version; does it exist?" && false)
   rm -rf /tmp/node
   mkdir /tmp/node
