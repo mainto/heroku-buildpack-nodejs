@@ -17,11 +17,15 @@ install_nodejs() {
   fi
 
   echo "Downloading and installing node $version..."
-  local download_url="https://s3pository.heroku.com/node/v$version/node-v$version-$os-$cpu.tar.gz"
-  curl "$download_url" --silent --fail  --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz || (echo "Unable to download node $version; does it exist?" && false)
-  tar xzf /tmp/node.tar.gz -C /tmp
+  local versionfolder = $(echo $version| cur -d'.' -f 1,2)
+  local download_url="https://deb.nodesource.com/node_$versionfolder/pool/main/n/nodejs/nodejs_$version-1nodesource1~trusty1_armhf.deb
+  curl "$download_url" --silent --fail  --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download node $version; does it exist?" && false)
+  rm -rf /tmp/node
+  mkdir /tmp/node
+  ar p /tmp/node.deb data/tar/xz | unxz | tar x -C /tmp/node
+  mv /tmp/node/usr/bin/nodejs /tmp/node/usr/bin/node
+  mv /tmp/node/usr/* $dir
   rm -rf $dir/*
-  mv /tmp/node-v$version-$os-$cpu/* $dir
   chmod +x $dir/bin/*
 }
 
@@ -35,10 +39,14 @@ install_iojs() {
   fi
 
   echo "Downloading and installing iojs $version..."
-  local download_url="https://iojs.org/dist/v$version/iojs-v$version-$os-$cpu.tar.gz"
-  curl "$download_url" --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz || (echo "Unable to download iojs $version; does it exist?" && false)
-  tar xzf /tmp/node.tar.gz -C /tmp
-  mv /tmp/iojs-v$version-$os-$cpu/* $dir
+  local versionfolder = $(echo $version| cur -d'.' -f 1)
+  local download_url="https://deb.nodesource.com/iojs_$versionfolder.x/pool/main/i/iojs/iojs_$version-1nodesource1~trusty1_armhf.deb
+  curl "$download_url" --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download iojs $version; does it exist?" && false)
+  rm -rf /tmp/node
+  mkdir /tmp/node
+  ar p /tmp/node.deb data/tar/xz | unxz | tar x -C /tmp/node
+  mv /tmp/node/usr/* $dir
+  rm -rf $dir/*
   chmod +x $dir/bin/*
 }
 
