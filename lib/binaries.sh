@@ -24,8 +24,8 @@ install_nodejs() {
   mkdir /tmp/node
   ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
   mv /tmp/node/usr/bin/nodejs /tmp/node/usr/bin/node
-  mv /tmp/node/usr/* $dir
   rm -rf $dir/*
+  mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
 }
 
@@ -45,8 +45,8 @@ install_iojs() {
   rm -rf /tmp/node
   mkdir /tmp/node
   ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
-  mv /tmp/node/usr/* $dir
   rm -rf $dir/*
+  mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
 }
 
