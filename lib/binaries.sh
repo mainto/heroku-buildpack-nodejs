@@ -22,7 +22,7 @@ install_nodejs() {
   curl "$download_url" --silent --fail  --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download node $version; does it exist?" && false)
   rm -rf /tmp/node
   mkdir /tmp/node
-  ar p /tmp/node.deb data/tar/xz | unxz | tar x -C /tmp/node
+  ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
   mv /tmp/node/usr/bin/nodejs /tmp/node/usr/bin/node
   mv /tmp/node/usr/* $dir
   rm -rf $dir/*
@@ -44,7 +44,7 @@ install_iojs() {
   curl "$download_url" --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.deb || (echo "Unable to download iojs $version; does it exist?" && false)
   rm -rf /tmp/node
   mkdir /tmp/node
-  ar p /tmp/node.deb data/tar/xz | unxz | tar x -C /tmp/node
+  ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
   mv /tmp/node/usr/* $dir
   rm -rf $dir/*
   chmod +x $dir/bin/*
