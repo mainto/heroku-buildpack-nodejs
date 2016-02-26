@@ -24,11 +24,14 @@ install_nodejs() {
   mkdir /tmp/node
   ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
   mv /tmp/node/usr/bin/nodejs /tmp/node/usr/bin/node
-  rm -rf /usr/bin/node
-  cp /tmp/node/usr/bin/node /usr/bin/node
   rm -rf $dir/*
   mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
+
+  local old_node="/usr/bin/node"
+  local new_node=$dir/bin/node
+  local file=$dir/bin/npm
+  sed -i "s@$old_node@$new_node@" $file
 }
 
 install_iojs() {
@@ -47,13 +50,14 @@ install_iojs() {
   rm -rf /tmp/node
   mkdir /tmp/node
   ar p /tmp/node.deb data.tar.xz | unxz | tar x -C /tmp/node
-  rm -rf /usr/bin/iojs
-  rm -rf /usr/bin/node
-  cp /tmp/node/usr/bin/iojs /usr/bin/iojs
-  cp /tmp/node/usr/bin/node /usr/bin/node
   rm -rf $dir/*
   mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
+
+  local old_iojs="/usr/bin/iojs"
+  local new_iojs=$dir/bin/iojs
+  local file=$dir/bin/npm
+  sed -i "s@$old_iojs@$new_iojs@" $file
 }
 
 install_npm() {
