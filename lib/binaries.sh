@@ -28,8 +28,8 @@ install_nodejs() {
   mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
 
-  local old_node="/usr/bin/node"
-  local new_node=$dir/bin/node
+  local old_node="^#!.*$"
+  local new_node="#!$dir/bin/node"
   local file=$dir/bin/npm
   sed -i --follow-symlinks "s@$old_node@$new_node@" $file
 }
@@ -54,14 +54,15 @@ install_iojs() {
   mv /tmp/node/usr/* $dir
   chmod +x $dir/bin/*
 
-  local old_iojs="/usr/bin/iojs"
-  local new_iojs=$dir/bin/iojs
+  local old_node="^#!.*$"
+  local new_node="#!$dir/bin/node"
   local file=$dir/bin/npm
-  sed -i --follow-symlinks "s@$old_iojs@$new_iojs@" $file
+  sed -i --follow-symlinks "s@$old_node@$new_node@" $file
 }
 
 install_npm() {
   local version="$1"
+  local dir="$2"
 
   if [ "$version" == "" ]; then
     echo "Using default npm version: `npm --version`"
@@ -75,6 +76,10 @@ install_npm() {
     else
       echo "Downloading and installing npm $version (replacing version `npm --version`)..."
       npm install --unsafe-perm --quiet -g npm@$version 2>&1 >/dev/null
+      local old_node="^#!.*$"
+      local new_node="#!$dir/bin/node"
+      local file=$dir/bin/npm
+      sed -i --follow-symlinks "s@$old_node@$new_node@" $file
     fi
   fi
 }
