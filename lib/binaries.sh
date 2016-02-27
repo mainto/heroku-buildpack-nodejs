@@ -31,7 +31,7 @@ install_nodejs() {
   local old_node="/usr/bin/node"
   local new_node=$dir/bin/node
   local file=$dir/bin/npm
-  sed -i "s@$old_node@$new_node@" $file
+  sed -i --follow-symlinks "s@$old_node@$new_node@" $file
 }
 
 install_iojs() {
@@ -57,7 +57,7 @@ install_iojs() {
   local old_iojs="/usr/bin/iojs"
   local new_iojs=$dir/bin/iojs
   local file=$dir/bin/npm
-  sed -i "s@$old_iojs@$new_iojs@" $file
+  sed -i --follow-symlinks "s@$old_iojs@$new_iojs@" $file
 }
 
 install_npm() {
