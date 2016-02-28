@@ -35,9 +35,19 @@ install_nodejs() {
   chmod +x $dir/bin/*
 
   local old_node="^#!.*$"
-  local new_node="#!$dir/bin/node"
+  local new_node=""
   local file=$dir/bin/npm
-  sed -i --follow-symlinks "s@$old_node@$new_node@" $file
+  local prefile="$file_pre"
+  local orgfile="$file_orig"
+
+  cat > $prefile << EOI
+#!/bin/sh
+// 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
+EOI
+  mv $file $orgfile
+
+  sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
+  cat $prefile $orgfile > $file
 }
 
 install_iojs() {
@@ -67,9 +77,19 @@ install_iojs() {
   chmod +x $dir/bin/*
 
   local old_node="^#!.*$"
-  local new_node="#!$dir/bin/node"
+  local new_node=""
   local file=$dir/bin/npm
-  sed -i --follow-symlinks "s@$old_node@$new_node@" $file
+  local prefile="$file_pre"
+  local orgfile="$file_orig"
+  
+  cat > $prefile << EOI
+#!/bin/sh
+// 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
+EOI
+  mv $file $orgfile
+
+  sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
+  cat $prefile $orgfile > $file
 }
 
 install_npm() {
@@ -89,9 +109,19 @@ install_npm() {
       echo "Downloading and installing npm $version (replacing version `npm --version`)..."
       npm install --unsafe-perm --quiet -g npm@$version 2>&1 >/dev/null
       local old_node="^#!.*$"
-      local new_node="#!$dir/bin/node"
+      local new_node=""
       local file=$dir/bin/npm
-      sed -i --follow-symlinks "s@$old_node@$new_node@" $file
+      local prefile="$file_pre"
+      local orgfile="$file_orig"
+  
+      cat > $prefile << EOI
+#!/bin/sh
+// 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
+EOI
+      mv $file $orgfile
+
+      sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
+      cat $prefile $orgfile > $file
     fi
   fi
 }
