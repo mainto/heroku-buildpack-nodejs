@@ -36,7 +36,7 @@ install_nodejs() {
 
   local old_node="^#!.*$"
   local new_node=""
-  local file=$dir/bin/npm
+  local file=$(realpath $dir/bin/npm)
   local prefile=$file.pre
   local orgfile=$file.orig
 
@@ -44,11 +44,13 @@ install_nodejs() {
 #!/bin/sh
 // 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
 EOI
-  mv $file $orgfile
+  cp $file $orgfile
 
   sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
   cat $prefile $orgfile > $file
   chmod +x $file
+  rm $prefile
+  rm $orgfile
 }
 
 install_iojs() {
@@ -79,7 +81,7 @@ install_iojs() {
 
   local old_node="^#!.*$"
   local new_node=""
-  local file=$dir/bin/npm
+  local file=$(realpath $dir/bin/npm)
   local prefile=$file.pre
   local orgfile=$file.orig
   
@@ -87,11 +89,13 @@ install_iojs() {
 #!/bin/sh
 // 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
 EOI
-  mv $file $orgfile
+  cp $file $orgfile
 
   sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
   cat $prefile $orgfile > $file
   chmod +x $file
+  rm $prefile
+  rm $orgfile
 }
 
 install_npm() {
@@ -112,7 +116,7 @@ install_npm() {
       npm install --unsafe-perm --quiet -g npm@$version 2>&1 >/dev/null
       local old_node="^#!.*$"
       local new_node=""
-      local file=$dir/bin/npm
+      local file=$(realpath $dir/bin/npm)
       local prefile=$file.pre
       local orgfile=$file.orig
   
@@ -120,11 +124,13 @@ install_npm() {
 #!/bin/sh
 // 2>/dev/null; exec "\`dirname "\$0"\`/node" "\$0" "\$@"
 EOI
-      mv $file $orgfile
+      cp $file $orgfile
 
       sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
       cat $prefile $orgfile > $file
       chmod +x $file
+      rm $prefile
+      rm $orgfile
     fi
   fi
 }
