@@ -37,8 +37,8 @@ install_nodejs() {
   local old_node="^#!.*$"
   local new_node=""
   local file=$dir/bin/npm
-  local prefile="$file_pre"
-  local orgfile="$file_orig"
+  local prefile=$file.pre
+  local orgfile=$file.orig
 
   cat > $prefile << EOI
 #!/bin/sh
@@ -79,8 +79,8 @@ install_iojs() {
   local old_node="^#!.*$"
   local new_node=""
   local file=$dir/bin/npm
-  local prefile="$file_pre"
-  local orgfile="$file_orig"
+  local prefile=$file.pre
+  local orgfile=$file.orig
   
   cat > $prefile << EOI
 #!/bin/sh
@@ -111,8 +111,8 @@ install_npm() {
       local old_node="^#!.*$"
       local new_node=""
       local file=$dir/bin/npm
-      local prefile="$file_pre"
-      local orgfile="$file_orig"
+      local prefile=$file.pre
+      local orgfile=$file.orig
   
       cat > $prefile << EOI
 #!/bin/sh
