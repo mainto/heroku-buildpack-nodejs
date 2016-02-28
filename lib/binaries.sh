@@ -36,7 +36,7 @@ install_nodejs() {
 
   local old_node="^#!.*$"
   local new_node=""
-  local file=$(realpath $dir/bin/npm)
+  local file=$(readlink -f $dir/bin/npm)
   local prefile=$file.pre
   local orgfile=$file.orig
 
@@ -81,7 +81,7 @@ install_iojs() {
 
   local old_node="^#!.*$"
   local new_node=""
-  local file=$(realpath $dir/bin/npm)
+  local file=$(readlink -f $dir/bin/npm)
   local prefile=$file.pre
   local orgfile=$file.orig
   
@@ -116,7 +116,7 @@ install_npm() {
       npm install --unsafe-perm --quiet -g npm@$version 2>&1 >/dev/null
       local old_node="^#!.*$"
       local new_node=""
-      local file=$(realpath $dir/bin/npm)
+      local file=$(readlink -f $dir/bin/npm)
       local prefile=$file.pre
       local orgfile=$file.orig
   
