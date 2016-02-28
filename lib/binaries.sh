@@ -48,6 +48,7 @@ EOI
 
   sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
   cat $prefile $orgfile > $file
+  chmod +x $file
 }
 
 install_iojs() {
@@ -90,6 +91,7 @@ EOI
 
   sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
   cat $prefile $orgfile > $file
+  chmod +x $file
 }
 
 install_npm() {
@@ -122,6 +124,7 @@ EOI
 
       sed -i --follow-symlinks "s@$old_node@$new_node@" $orgfile
       cat $prefile $orgfile > $file
+      chmod +x $file
     fi
   fi
 }
